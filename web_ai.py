@@ -4,6 +4,10 @@ from pypdf import PdfReader
 import requests
 import datetime
 st.title("贾维斯")
+api_input = st.sidebar.text_input("请输入你的API Key", type="password")
+if not api_input:
+    st.warning("请先在左侧输入 API Key，否则无法对话！")
+    st.stop()
 st.write("请在下方输入你的问题,我会认真回答。")
 uploaded_file=st.sidebar.file_uploader("把你的秘密上传到这里",type=["txt","pdf"])
 st.sidebar.info("目前支持.txt和.pdf格式")
@@ -21,7 +25,6 @@ if uploaded_file:
         st.session_state.doc_text=uploaded_file.read().decode("utf-8",errors="ignore")
         st.success("文件读取成功!")
 api_key="Bearer "+("API_KEY")
-st.write("当前使用的key是:",api_key)
 url = "https://api.deepseek.com/chat/completions"
 if"doc_text"not in st.session_state:
     st.session_state.doc_text=""
@@ -39,7 +42,7 @@ if user_input:
         st.write(user_input)
     st.session_state.messages.append({"role": "user", "content": user_input})
     headers = {
-        "Authorization": api_key,
+        "Authorization":"Bearer " + api_input,
         "Content-Type": "application/json"
     }
     st.session_state.messages=st.session_state.messages[-10:]
