@@ -3,8 +3,6 @@ st.set_page_config(page_title="我的私人AI助理",page_icon="🤖")
 from pypdf import PdfReader
 import requests
 import datetime
-import os
-from dotenv import load_dotenv
 st.title("贾维斯")
 st.write("请在下方输入你的问题,我会认真回答。")
 uploaded_file=st.sidebar.file_uploader("把你的秘密上传到这里",type=["txt","pdf"])
@@ -22,8 +20,7 @@ if uploaded_file:
     else:
         st.session_state.doc_text=uploaded_file.read().decode("utf-8",errors="ignore")
         st.success("文件读取成功!")
-load_dotenv()
-api_key="Bearer "+os.getenv("API_KEY")
+api_key="Bearer "+("API_KEY")
 st.write("当前使用的key是:",api_key)
 url = "https://api.deepseek.com/chat/completions"
 if"doc_text"not in st.session_state:
