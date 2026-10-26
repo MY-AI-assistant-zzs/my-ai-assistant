@@ -57,7 +57,7 @@ if user_input:
     print("状态码:", response.status_code)
     print("原始内容:", response.text)
     print("======================")
+    if response.status_code != 200:
+        st.error("请求失败，状态码：" + str(response.status_code) + "，详情：" + response.text)
+        st.stop()
     reply = response.json()['choices'][0]['message']['content']
-    with st.chat_message("assistant"):
-        st.write(reply)
-    st.session_state.messages.append({"role": "assistant", "content": reply})
