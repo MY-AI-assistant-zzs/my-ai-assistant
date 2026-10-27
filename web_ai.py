@@ -9,6 +9,7 @@ st.write("请在下方输入你的问题，我会认真回答。")
 
 api_input = st.sidebar.text_input("请输入你的API Key", type="password")
 selected_role=st.sidebar.selectbox("请选择AI的角色", ["有趣的助手", "严谨的翻译官", "Python编程老师"])
+ai_temp=st.sidebar.slider("设置AI的脑洞程度(温度),min_value=0.0,max_value=1.5,value=0.7,step=0.1")
 if not api_input:
     st.warning("请先在左侧输入 API Key，否则无法对话！")
     st.stop()
@@ -66,7 +67,7 @@ if user_input:
     }
     data = {
         "model": "deepseek-chat",
-        "temperature": 0.7,
+        "temperature": max(0.0, min(1.5, float(ai_temp))),
         "messages": temp_messages
     }
 
