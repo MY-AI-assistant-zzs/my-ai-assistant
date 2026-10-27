@@ -8,6 +8,7 @@ st.title("贾维斯")
 st.write("请在下方输入你的问题，我会认真回答。")
 
 api_input = st.sidebar.text_input("请输入你的API Key", type="password")
+selected_role=st.sidebar.selectbox("请选择AI的角色", ["有趣的助手", "严谨的翻译官", "Python编程老师"])
 if not api_input:
     st.warning("请先在左侧输入 API Key，否则无法对话！")
     st.stop()
@@ -19,8 +20,8 @@ if st.sidebar.button("清空聊天记录"):
     st.session_state.messages = []
     st.balloons()
 
-if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "system", "content": "你是一个有趣的AI助手，请用幽默的方式回答问题。"}]
+if"messages"not in st.session_state:
+    st.session_state.messages=[{"role":"system","content":"你现在扮演的角色是:"+selected_role}]
 if "doc_text" not in st.session_state:
     st.session_state.doc_text = ""
 
